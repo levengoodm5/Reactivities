@@ -87,4 +87,20 @@ export default class ProfileStore {
             console.log(error);
         }
     }
+
+    editProfile = async (profile: Partial<Profile>) => {
+        this.loading = true;
+        try {
+            await agent.Profiles.editProfile(profile);
+            if (profile.displayName && profile.displayName !== 
+                store.userStore.user?.displayName) store.userStore.setDisplayName(profile.displayName);
+            runInAction(() => {
+                this.profile = {...this.profile, ...profile as Profile};
+                this.loading = false;    
+            })
+        } catch (error) {
+            console.log(error);
+            runInAction(() => this.loading = false);
+        }
+    }
 }
