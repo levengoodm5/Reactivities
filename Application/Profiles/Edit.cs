@@ -52,9 +52,9 @@ namespace Application.Profiles
 
                 var result = await _context.SaveChangesAsync() > 0;
 
-                if (!result) return Result<Unit>.Failure("Failed to update profile.");
+                if (result) return Result<Unit>.Success(Unit.Value);
 
-                return Result<Unit>.Success(Unit.Value);
+                return Result<Unit>.Failure("Problem updating profile.");
             }
         }
     }
