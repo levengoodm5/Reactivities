@@ -61,18 +61,18 @@ namespace API.Controllers
                 return ValidationProblem();
             }
 
-            var user = new AppUser
+            var userName = new AppUser
             {
                 DisplayName = registerDto.DisplayName,
                 Email = registerDto.Email,
                 UserName = registerDto.Username
             };
 
-            var result = await _userManager.CreateAsync(user, registerDto.Password);
+            var result = await _userManager.CreateAsync(userName, registerDto.Password);
 
             if (result.Succeeded)
             {
-                return CreateUserObject(user);
+                return CreateUserObject(userName);
             }
 
             return BadRequest("Problem registering user");
